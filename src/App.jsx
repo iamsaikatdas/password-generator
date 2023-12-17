@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useCallback, useEffect, useState } from "react";
 
 function App() {
@@ -5,6 +6,12 @@ function App() {
   const [numberAllow, setNumberAllow] = useState(false);
   const [characterAllow, setCharacterAllow] = useState(false);
   const [password, setPassword] = useState("");
+
+  // useRef - kono kichur jodi reference nite hoi takhn ata use kora hoi
+  let passwordRef = useRef();
+  const CopyToClipBoard = useCallback(() => {
+    window.navigator.clipboard.writeText(password);
+  }, [password]);
 
   // useCallback - return memorized function,
   // is a React Hook that lets you cache a function definition between re-renders.
@@ -43,8 +50,12 @@ function App() {
             readOnly
             placeholder="Password"
             className="px-3 py-1 outline-none w-full"
+            ref={passwordRef}
           />
-          <button className="bg-blue-700 px-4 py-2 hover:bg-emerald-600 duration-300">
+          <button
+            className="bg-blue-700 px-4 py-2 hover:bg-emerald-600 duration-300"
+            onClick={CopyToClipBoard}
+          >
             Copy
           </button>
         </div>
